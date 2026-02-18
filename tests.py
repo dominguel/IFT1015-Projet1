@@ -1,3 +1,10 @@
+# TESTS UNITAIRES
+
+def unit_tests():
+    pass#undefined
+
+# ASSERTIONS POUR LES ARGUMENTS
+
 # La procedure palette prend en parametre deux entiers x et y et une liste de
 # couleurs en format RGB444.
 # Elle affiche cette palette de couleur sur une ligne horizontale commencant a
