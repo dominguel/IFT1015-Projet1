@@ -16,7 +16,7 @@ def palette(x, y, couleurs):
 
 def palette_valide(couleurs):
     assert isinstance(couleurs, list)       , "type invalide"
-    for i in list:
+    for i in couleurs:
         # validite des couleurs
         rgb444_valide(i)
 
