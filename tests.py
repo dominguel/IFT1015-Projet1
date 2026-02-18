@@ -29,6 +29,7 @@ def rgb444_valide(couleur):
     for i in range(1, 4):
         assert i.upper in "0123456789ABCDEF", "symbole non-hex dans une couleur"
 
+
 # La procedure afficher prend en entree deux entiers x et y, une forme (une 
 # matrice 2D contenant des index vers une couleur de la palette de couleur) et
 # une palette de couleurs (une liste de couleurs au format RGB444). Elle affiche
@@ -60,17 +61,17 @@ def afficher(x, y, forme, couleurs):
 def forme_valide(forme):
 
     assert isinstance(forme, list)          , "type invalide"
+
     largeur = len(forme[0])
     for rangee in forme:
         assert isinstance(rangee, list)     , "type invalide"
-
         assert len(rangee) == largeur       , "matrice non-rectangulaire"
 
         for i in rangee:
             assert isinstance(i, int)       , "type invalide"
-
             # couleurs dans [-1, +infini[
             assert i >= -1                  , "couleur negative indefinissable"
+
 
 # La procedure effacer prend en entree quatres entiers. Les deux premiers
 # parametres, x et y représentent la position du coin superieur gauche d'un
@@ -101,28 +102,23 @@ def effacer(x, y, largeur, hauteur)
 # superposee a la forme1 de telle sorte que les pixels de la forme2 remplacent
 # ceux de la forme1 a la position correspondante. Si un pixel de la forme2 est
 # egal a -1, le pixel de la forme1 est conserve.
+def superpose(forme1, forme2):
+    #TODO: verifier le comportement attendu quand forme2 depasse forme1
+    # apres la translation (+x, +y)
 
-# types:
-# forme1 :: [[int]]
-# forme2 :: [[int]]
-
-# assertions:
-# forme1 est une matrice valide
-# forme2 est une matrice valide
-
+    forme_valide(forme1)
+    forme_valide(forme2)
 # notes:
 # la matrice de retour est un nouvel objet de dimensions forme1
-# les pixels de forme2 d'index hors forme1 sont ignores
+# les pixels de forme2 d'index hors forme1 sont ignores?
 # -1 est la couleur transparente
 
 
 # La fonction negatif prend une forme en entree et retourne une nouvelle forme
 # ou les pixels colores sont remplaces par des pixels vides (representes par
 # -1), et les pixels vides sont remplaces par la couleur 0.
-
-# types:
-# forme :: [[int]]
-
+def negatif(forme):
+    forme_valide(forme)
 # notes:
 # fonction constituee d'un test ==-1 et d'une forme de retour
 # devrait seulement briser sur une matrice heterogene (erreur de type)
@@ -132,19 +128,19 @@ def effacer(x, y, largeur, hauteur)
 # forme de dimensions largeur x hauteur ou chaque pixel est assigne a une
 # couleur aleatoire parmi nb_couleurs. Les couleurs sont representees par des
 # entiers allant de 0 a nb_couleurs - 1.
+def aleatoire(largeur, hauteur, nb_couleurs)
+    #TODO: demander au prof des explications sur le quatrieme argument (trois
+    # entiers definis par la spec)
 
-# TODO: demander au prof des explications sur le quatrieme argument (trois
-# entiers definis par la spec)
+    assert isinstance(largeur, int)     , "type invalide"
+    assert largeur >= 0                 , "largeur negative"
 
-# types:
-# largeur :: int
-# hauteur :: int
-# nb_couleurs :: int
+    assert isinstance(hauteur, int)     , "type invalide"
+    assert hauteur >= 0                 , "hauteur negative"
 
-# assertions:
-# largeur >= 0
-# hauteur >= 0
-# nb_couleurs > 0 # selon la spec, aleatoire ne contient jamais la couleur -1
+    assert isinstance(nb_couleurs, int) , "type invalide"
+    # selon la spec, aleatoire ne contient jamais la couleur -1
+    assert nb_couleurs > 0              , "palette insuffisante"
 
 
 # La fonction incrementer_couleurs prend une forme et un nombre de couleurs en
@@ -153,15 +149,22 @@ def effacer(x, y, largeur, hauteur)
 # allant de 0 a nb_couleurs - 1. Si un pixel a la couleur nb_couleurs - 1, il
 # est remplace par la couleur 0. Les pixels vides (representes par -1) restent
 # inchanges.
+def incrementer_couleurs(forme, nb_couleurs):
+#TODO: Comportement attendu quand forme a une couleur > nb_couleur?
 
-# types:
-# forme :: [[int]]
-# nb_couleurs :: int
+    forme_valide(forme)
 
-# assertions:
-# nb_couleurs > 0
-# forme ne contient que c t.q. nb_couleurs > c
+    assert isinstance(nb_couleurs, int) , "type invalide"
+    assert nb_couleurs > 0              , "palette insuffisante"
 
+    # la rotation des couleurs s'effectue sur une palette inconnue, donc avec
+    # les couleurs deja utilisees par forme
+    # forme contient un nombre inconnu de couleurs, possiblement > nb_couleurs
+    for rangee in forme:
+        for i in rangee:
+            assert i < nb_couleurs      , (
+                "incrementation impossible; forme a trop de couleurs"
+            )
 # notes:
 # operation pixel-par-pixel; forme n'a pas besoin de dimensions valides
 # utiliser % (mod) pour rester dans le domaine de nb_couleurs
@@ -174,17 +177,30 @@ def effacer(x, y, largeur, hauteur)
 # colore est remplace par la couleur precedente dans la palette de couleurs. Si
 # un pixel a la couleur 0, il est remplace par la couleur nb_couleurs - 1. Les
 # pixels vides (representes par -1) restent inchanges.
+def decrementer_couleurs(forme, nb_couleurs):
 
+    forme_valide(forme)
+
+    assert isinstance(nb_couleurs, int) , "type invalide"
+    assert nb_couleurs > 0              , "palette insuffisante"
+
+    # la rotation des couleurs s'effectue sur une palette inconnue, donc avec
+    # les couleurs deja utilisees par forme
+    # forme contient un nombre inconnu de couleurs, possiblement > nb_couleurs
+    for rangee in forme:
+        for i in rangee:
+            assert i < nb_couleurs      , (
+                "decrementation impossible; forme a trop de couleurs"
+            )
 # voir incrementer_couleurs
 # rotation gauche sur palette
 
 
 # La fonction rotation_horaire prend une forme en entree et retourne une
 # nouvelle forme qui est la rotation de la forme d'entree dans le sens horaire.
+def rotation_horaire(forme):
 
-# types:
-# forme :: [[int]]
-
+    forme_valide(forme)
 # notes: on peut utiliser la multiplication matricielle ssi forme est une
 # matrice valide
 
@@ -192,7 +208,9 @@ def effacer(x, y, largeur, hauteur)
 # La fonction rotation_antihoraire prend une forme en entree et retourne une
 # nouvelle forme qui est la rotation de la forme d'entree dans le sens
 # antihoraire.
+def rotation_antihoraire(forme):
 
+    forme_valide(forme)
 # voir rotation_horaire
 
 
