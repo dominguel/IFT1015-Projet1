@@ -140,3 +140,83 @@ def rotation_antihoraire(forme):
             resultat[j].append(forme[i][-j-1])
 
     return resultat
+
+def jeu_de_la_vie(stateIn):
+    tests.jeu_de_la_vie(stateIn)# assertions
+
+    stateOut = []
+    
+    # application des regles du jeu
+    for j, rangee in enumerate(stateIn):
+        stateOut.append([])
+        for i, cell in enumerate(rangee):
+
+        nb_voisins = voisins(stateIn, i, j)
+        # Notez qu'on ne prend pas pour acquis que chaque cellule de l'etat
+        # initial correspond a son nombre de voisins.
+        # On doit donc calculer les voisins dans la nouvelle forme separement
+        # de l'application des regles du jeu.
+        # C'est plus lent, mais l'etat initial est moins restreint.
+        # Aussi, ca m'evite d'ecrire un test d'etat de jeu valide pour stateIn.
+        # Donc cellule morte = -1 et
+        # cellule vivante = 0; on calcule les voisins dans une autre iteration
+
+        #TODO: simplifier la logique redondante mais lisible
+        # Si une cellule (un pixel) dans la forme en paramètre est vivante
+        # (colorée) et a moins de 2 voisins vivants, elle meurt (devient vide).
+        if cell != -1 and nb_voisins < 2:
+            stateOut[j].append(-1)
+
+        # Si une cellule vivante a 2 ou 3 voisins vivants, elle reste vivante.
+        elif cell != -1 and nb_voisins in {2, 3}:
+            stateOut[j].append(0)
+
+        # Si une cellule vivante a plus de 3 voisins vivants, elle meurt.
+        elif cell != -1 and nb_voisins > 3:
+            stateOut[j].append(-1)
+
+        # Si une cellule vide a exactement 3 voisins vivants, elle devient
+        # vivante (colorée).
+        elif cell == -1 and nb_voisins == 3:
+            stateOut[j].append(0)
+
+        # cas de base
+        #TODO: verifier match exhaustif?
+        else:
+            stateOut[j].append(-1)
+
+    # calcul des nouveaux voisins
+    for j, rangee in enumerate(stateOut):
+        for i, cell in enumerate(rangee):
+            if cell != -1:
+                stateOut[j][i] = voisins(stateOut, i, j)
+
+    return stateOut
+
+def voisins(forme, x, y):
+# retourne nb voisins vivants de forme[y][x]
+# fonction pure
+#TODO: tests & assertions
+
+    nb_voisins = 0# acc
+
+    # raccourcis pour lisibilite
+    hauteur = len(forme)
+    largeur = len(forme[0])
+    # ^ forme[0] est suffisant car forme est une matrice rectangulaire
+
+    #TODO: simplifier la logique redondante mais lisible
+    if y > 0:# rangee > 0 donc voisin nord existe
+        if forme[y-1][x] != -1:
+            nb_voisins += 1
+    if y < (hauteur - 1):# rangee avant la fin, donc voisin sud existe
+        if forme[y+1][x] != -1:
+            nb_voisins += 1
+    if x > 0:# colonne > 0 donc voisin ouest existe
+        if forme[y][x-1] != -1:
+            nb_voisins += 1
+    if x < (largeur - 1):# colonne avant la fin, donc voisin est existe
+        if forme[y][x+1] != -1:
+            nb_voisins += 1
+
+    return nb_voisins

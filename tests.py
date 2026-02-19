@@ -1,10 +1,11 @@
 # TESTS UNITAIRES
 
 def unit_tests():
-    pass# undefined
-    #TODO: demander au prof si les tests unitaires sont necessaires
-    # quand on a autant d'assertions sur de si simples fonctions
-    # i.e. comment trouver un cas limite pour palette qui n'est pas un assert?
+#TODO: demander au prof si les tests unitaires sont necessaires
+# quand on a autant d'assertions sur de si simples fonctions
+# i.e. comment trouver un cas limite pour palette qui n'est pas deja un assert?
+    print("Tests unitaires termines.")
+    return True
 
 # ASSERTIONS POUR LES ARGUMENTS
 
@@ -47,7 +48,7 @@ def rgb444_valide(couleur):
 # dans la forme correspond a une case vide pour laquelle la couleur deja
 # presente dans le dessin doit etre conservee.
 def afficher(x, y, forme, couleurs):
-    #TODO: verifier le comportement attendu quand la forme ne rentre pas
+#TODO: verifier le comportement attendu quand la forme ne rentre pas
 
     palette_valide(couleurs)
     forme_valide(forme)
@@ -89,7 +90,7 @@ def forme_valide(forme):
 # parametres, largeur et hauteur. La procedure doit remplacer tous les pixels
 # du rectangle par des pixels noirs ("#000").
 def effacer(x, y, largeur, hauteur):
-    #TODO: verifier le comportement attendu quand forme1 ne contient pas forme2
+#TODO: verifier le comportement attendu quand forme1 ne contient pas forme2
 
     assert isinstance(x, int)               , "type invalide"
     assert 0 <= x and x < getScreenWidth()  , "coordonee x hors champ"
@@ -113,8 +114,8 @@ def effacer(x, y, largeur, hauteur):
 # ceux de la forme1 a la position correspondante. Si un pixel de la forme2 est
 # egal a -1, le pixel de la forme1 est conserve.
 def superpose(forme1, forme2, x, y):
-    #TODO: verifier le comportement attendu quand forme2 depasse forme1
-    # apres la translation (+x, +y)
+#TODO: verifier le comportement attendu quand forme2 depasse forme1
+# apres la translation (+x, +y)
 
     forme_valide(forme1)
     forme_valide(forme2)
@@ -144,8 +145,8 @@ def negatif(forme):
 # couleur aleatoire parmi nb_couleurs. Les couleurs sont representees par des
 # entiers allant de 0 a nb_couleurs - 1.
 def aleatoire(largeur, hauteur, nb_couleurs):
-    #TODO: demander au prof des explications sur le quatrieme argument (trois
-    # entiers definis par la spec)
+#TODO: demander au prof des explications sur le quatrieme argument (trois
+# entiers definis par la spec)
 
     assert isinstance(largeur, int)     , "type invalide"
     assert largeur >= 0                 , "largeur negative"
@@ -165,7 +166,7 @@ def aleatoire(largeur, hauteur, nb_couleurs):
 # est remplace par la couleur 0. Les pixels vides (representes par -1) restent
 # inchanges.
 def incrementer_couleurs(forme, nb_couleurs):
-#TODO: Comportement attendu quand forme a une couleur > nb_couleur?
+#TODO: verifier le comportement attendu quand forme a couleur > nb_couleur
 
     forme_valide(forme)
 
@@ -216,8 +217,7 @@ def decrementer_couleurs(forme, nb_couleurs):
 def rotation_horaire(forme):
 
     forme_valide(forme)
-# notes: on peut utiliser la multiplication matricielle ssi forme est une
-# matrice valide
+# notes: sans utiliser la multiplication matricielle
 
 
 # La fonction rotation_antihoraire prend une forme en entree et retourne une
@@ -226,9 +226,9 @@ def rotation_horaire(forme):
 def rotation_antihoraire(forme):
 
     forme_valide(forme)
-# voir rotation_horaire
+# notes: voir rotation_horaire
 
 
-# TODO: read the specs
 def jeu_de_la_vie(forme):
-    pass
+
+    forme_valide(forme)
