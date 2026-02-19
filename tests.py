@@ -86,7 +86,7 @@ def forme_valide(forme):
 # parametres, largeur et hauteur. La procedure doit remplacer tous les pixels
 # du rectangle par des pixels noirs ("#000").
 def effacer(x, y, largeur, hauteur)
-    #TODO: verifier le comportement attendu quand le rectangle ne rentre pas
+    #TODO: verifier le comportement attendu quand forme1 ne contient pas forme2
 
     assert isinstance(x, int)               , "type invalide"
     assert 0 <= x and x < getScreenWidth()  , "coordonee x hors champ"
@@ -109,12 +109,17 @@ def effacer(x, y, largeur, hauteur)
 # superposee a la forme1 de telle sorte que les pixels de la forme2 remplacent
 # ceux de la forme1 a la position correspondante. Si un pixel de la forme2 est
 # egal a -1, le pixel de la forme1 est conserve.
-def superpose(forme1, forme2):
+def superpose(forme1, forme2, x, y):
     #TODO: verifier le comportement attendu quand forme2 depasse forme1
     # apres la translation (+x, +y)
 
     forme_valide(forme1)
     forme_valide(forme2)
+
+    assert isinstance(x, int)               , "type invalide"
+    assert 0 <= x and x < getScreenWidth()  , "coordonee x hors champ"
+    assert isinstance(y, int)               , "type invalide"
+    assert 0 <= x and y < getScreenHeight() , "coordonee y hors champ"
 # notes:
 # la matrice de retour est un nouvel objet de dimensions forme1
 # les pixels de forme2 d'index hors forme1 sont ignores?
