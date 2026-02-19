@@ -1,7 +1,9 @@
 # TESTS UNITAIRES
 
 def unit_tests():
-    pass#undefined
+    #TODO: demander au prof si les tests unitaires sont necessaires
+    # quand on a autant d'assertions sur de si simples fonctions
+    # i.e. comment trouver un cas limite pour palette qui n'est pas un assert?
 
 # ASSERTIONS POUR LES ARGUMENTS
 
@@ -33,7 +35,7 @@ def rgb444_valide(couleur):
     assert isinstance(couleur, str)         , "type invalide"
     assert len(couleur) == 4                , "code couleur de forme invalide"
     assert couleur[0] == "#"                , "symbole \"#\" manquant"
-    for i in range(1, 4):
+    for i in couleur[1:]:# pour chaque symbole i apres "#" (par une slice)
         assert i.upper in "0123456789ABCDEF", "symbole non-hex dans une couleur"
 
 
