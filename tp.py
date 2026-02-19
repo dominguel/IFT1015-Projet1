@@ -26,11 +26,7 @@ def superpose(forme1, forme2, x, y):
     # pour la rangee j de forme1
     for j, rangee1 in enumerate(forme1):
         resultat.append([])
-        # pour la colonne i de forme1 >= y
-                and j < y + hauteur2
-                and i >= x
-                and i < x + largeur2
-                ):
+        # pour la couleur [j][i]
         for i, couleur1 in enumerate(rangee1):
 
             hauteur2 = len(forme2)
@@ -57,14 +53,14 @@ def negatif(forme) :
     tests.negatif(forme)# assertions
 
     resultat = []
-    for rangee in forme:
+    for j, rangee in enumerate(forme):
         resultat.append([])
         for i, c in enumerate(rangee):
 
-            if rangee[i] == -1:
-                resultat.append(0)
+            if c == -1:
+                resultat[j].append(0)
             else:
-                resultat.append(-1)
+                resultat[j].append(-1)
 
     return resultat
 
@@ -83,13 +79,13 @@ def incrementer_couleurs(forme, nb_couleurs):
     tests.incrementer_couleurs(forme, nb_couleurs)# assertions
 
     resultat = []
-    for rangee in forme:
+    for j, rangee in enumerate(forme):
         resultat.append([])
         for c in rangee:
             if c != -1:
-                resultat.append((c+1) % nb_couleurs)
+                resultat[j].append((c+1) % nb_couleurs)
             else:
-                resultat.append(c)
+                resultat[j].append(c)
 
     return resultat
 
@@ -97,29 +93,34 @@ def decrementer_couleurs(forme, nb_couleurs):
     tests.decrementer_couleurs(forme, nb_couleurs)# assertions
 
     resultat = []
-    for rangee in forme:
+    for j, rangee in enumerate(forme):
         resultat.append([])
         for c in rangee:
             if c != -1:
-                resultat.append((c-1) % nb_couleurs)
+                resultat[j].append((c-1) % nb_couleurs)
             else:
-                resultat.append(c)
+                resultat[j].append(c)
 
     return resultat
 
 def rotation_horaire(forme):
     tests.rotation_horaire(forme)# assertions
 
-    largeur = len(forme)    # colonne du resultat = rangee de l'originale
+    largeur = len(forme)    # largeur 2 <- hauteur 1
     hauteur = len(forme[0]) # vice-versa
     # ^ forme[0] est suffisant car forme est une matrice rectangulaire
 
     resultat = []
-    for j in range(-1, -hauteur, -1):
+    # pour la rangee j dans resultat
+    for j in range(hauteur):
         resultat.append([])
-        for i in range(-1, -largeur, -1):
+        # pour la colonne i dans resultat
+        for i in range(largeur):
             # attention a l'inversion de la direction de lecture (indices < 0)
-            resultat.append(forme[i][j])
+            # attention a eviter OBOE dans les indices negatifs
+            resultat[j].append(forme[-i-1][j])
+
+    return resultat
 
 def rotation_antihoraire(forme):
     tests.rotation_antihoraire(forme)# assertions
@@ -129,8 +130,13 @@ def rotation_antihoraire(forme):
     # ^ forme[0] est suffisant car forme est une matrice rectangulaire
 
     resultat = []
+    # pour la rangee j dans resultat
     for j in range(0, hauteur, 1):
         resultat.append([])
+        # pour la colonne i dans resultat
         for i in range(0, largeur, 1):
             # attention a l'inversion colonne/rangee
-            resultat.append(forme[i][j])
+            # attention a eviter OBOE dans les indices negatifs
+            resultat[j].append(forme[i][-j-1])
+
+    return resultat

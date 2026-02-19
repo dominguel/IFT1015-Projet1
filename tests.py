@@ -1,6 +1,7 @@
 # TESTS UNITAIRES
 
 def unit_tests():
+    pass# undefined
     #TODO: demander au prof si les tests unitaires sont necessaires
     # quand on a autant d'assertions sur de si simples fonctions
     # i.e. comment trouver un cas limite pour palette qui n'est pas un assert?
@@ -36,7 +37,7 @@ def rgb444_valide(couleur):
     assert len(couleur) == 4                , "code couleur de forme invalide"
     assert couleur[0] == "#"                , "symbole \"#\" manquant"
     for i in couleur[1:]:# pour chaque symbole i apres "#" (par une slice)
-        assert i.upper in "0123456789ABCDEF", "symbole non-hex dans une couleur"
+        assert i.upper() in "0123456789ABCDEF", "symbole non-hex dans couleur"
 
 
 # La procedure afficher prend en entree deux entiers x et y, une forme (une 
@@ -87,7 +88,7 @@ def forme_valide(forme):
 # rectangle. Les dimensions du rectangle sont donnees par les deux derniers
 # parametres, largeur et hauteur. La procedure doit remplacer tous les pixels
 # du rectangle par des pixels noirs ("#000").
-def effacer(x, y, largeur, hauteur)
+def effacer(x, y, largeur, hauteur):
     #TODO: verifier le comportement attendu quand forme1 ne contient pas forme2
 
     assert isinstance(x, int)               , "type invalide"
@@ -142,7 +143,7 @@ def negatif(forme):
 # forme de dimensions largeur x hauteur ou chaque pixel est assigne a une
 # couleur aleatoire parmi nb_couleurs. Les couleurs sont representees par des
 # entiers allant de 0 a nb_couleurs - 1.
-def aleatoire(largeur, hauteur, nb_couleurs)
+def aleatoire(largeur, hauteur, nb_couleurs):
     #TODO: demander au prof des explications sur le quatrieme argument (trois
     # entiers definis par la spec)
 
