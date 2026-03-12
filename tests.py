@@ -37,7 +37,8 @@ def rgb444_valide(couleur):
     assert isinstance(couleur, str)         , "type invalide"
     assert len(couleur) == 4                , "code couleur de forme invalide"
     assert couleur[0] == "#"                , "symbole \"#\" manquant"
-    for i in couleur[1:]:# pour chaque symbole i apres "#" (par une slice)
+    # pour chaque symbole i apres "#" (par une slice)
+    for i in couleur[1:]:
         assert i.upper() in "0123456789ABCDEF", "symbole non-hex dans couleur"
 
 
@@ -48,7 +49,7 @@ def rgb444_valide(couleur):
 # dans la forme correspond a une case vide pour laquelle la couleur deja
 # presente dans le dessin doit etre conservee.
 def afficher(x, y, forme, couleurs):
-#TODO: verifier le comportement attendu quand la forme ne rentre pas
+#TODO: verifier le comportement attendu quand la forme depasse l'ecran
 
     palette_valide(couleurs)
     forme_valide(forme)
@@ -90,7 +91,7 @@ def forme_valide(forme):
 # parametres, largeur et hauteur. La procedure doit remplacer tous les pixels
 # du rectangle par des pixels noirs ("#000").
 def effacer(x, y, largeur, hauteur):
-#TODO: verifier le comportement attendu quand forme1 ne contient pas forme2
+#TODO: verifier le comportement attendu quand le rectangle depasse l'ecran 
 
     assert isinstance(x, int)               , "type invalide"
     assert 0 <= x and x < getScreenWidth()  , "coordonee x hors champ"
@@ -125,8 +126,8 @@ def superpose(forme1, forme2, x, y):
     assert isinstance(y, int)               , "type invalide"
     assert 0 <= x and y < getScreenHeight() , "coordonee y hors champ"
 # notes:
-# la matrice de retour est un nouvel objet de dimensions forme1
-# les pixels de forme2 d'index hors forme1 sont ignores?
+# La matrice de retour est un nouvel objet de dimensions forme1
+# Les pixels de forme2 d'index hors forme1 sont ignores? Non-specifie.
 # -1 est la couleur transparente
 
 
@@ -145,8 +146,8 @@ def negatif(forme):
 # couleur aleatoire parmi nb_couleurs. Les couleurs sont representees par des
 # entiers allant de 0 a nb_couleurs - 1.
 def aleatoire(largeur, hauteur, nb_couleurs):
-#TODO: demander au prof des explications sur le quatrieme argument (trois
-# entiers definis par la spec)
+#TODO: demander au prof des explications sur le quatrieme argument
+# (trois entiers definis par la spec)
 
     assert isinstance(largeur, int)     , "type invalide"
     assert largeur >= 0                 , "largeur negative"
@@ -166,7 +167,7 @@ def aleatoire(largeur, hauteur, nb_couleurs):
 # est remplace par la couleur 0. Les pixels vides (representes par -1) restent
 # inchanges.
 def incrementer_couleurs(forme, nb_couleurs):
-#TODO: verifier le comportement attendu quand forme a couleur > nb_couleur
+#TODO: verifier le comportement attendu quand forme a couleur > nb_couleurs
 
     forme_valide(forme)
 
@@ -194,6 +195,7 @@ def incrementer_couleurs(forme, nb_couleurs):
 # un pixel a la couleur 0, il est remplace par la couleur nb_couleurs - 1. Les
 # pixels vides (representes par -1) restent inchanges.
 def decrementer_couleurs(forme, nb_couleurs):
+#TODO: verifier le comportement attendu quand forme a couleur > nb_couleurs
 
     forme_valide(forme)
 

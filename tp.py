@@ -106,7 +106,7 @@ def decrementer_couleurs(forme, nb_couleurs):
 def rotation_horaire(forme):
     tests.rotation_horaire(forme)# assertions
 
-    largeur = len(forme)    # largeur 2 <- hauteur 1
+    largeur = len(forme)    # colonne du resultat = rangee de l'originale
     hauteur = len(forme[0]) # vice-versa
     # ^ forme[0] est suffisant car forme est une matrice rectangulaire
 
@@ -131,10 +131,10 @@ def rotation_antihoraire(forme):
 
     resultat = []
     # pour la rangee j dans resultat
-    for j in range(0, hauteur, 1):
+    for j in range(hauteur):
         resultat.append([])
         # pour la colonne i dans resultat
-        for i in range(0, largeur, 1):
+        for i in range(largeur):
             # attention a l'inversion colonne/rangee
             # attention a eviter OBOE dans les indices negatifs
             resultat[j].append(forme[i][-j-1])
@@ -158,10 +158,9 @@ def jeu_de_la_vie(stateIn):
         # de l'application des regles du jeu.
         # C'est plus lent, mais l'etat initial est moins restreint.
         # Aussi, ca m'evite d'ecrire un test d'etat de jeu valide pour stateIn.
-        # Donc cellule morte = -1 et
-        # cellule vivante = 0; on calcule les voisins dans une autre iteration
+        # Donc cellule morte = -1 et cellule vivante = 0
+        # on calcule les nouveaux voisins dans une autre iteration
 
-        #TODO: simplifier la logique redondante mais lisible
         # Si une cellule (un pixel) dans la forme en paramètre est vivante
         # (colorée) et a moins de 2 voisins vivants, elle meurt (devient vide).
         if cell != -1 and nb_voisins < 2:
@@ -181,7 +180,6 @@ def jeu_de_la_vie(stateIn):
             stateOut[j].append(0)
 
         # cas de base
-        #TODO: verifier match exhaustif?
         else:
             stateOut[j].append(-1)
 
@@ -194,9 +192,9 @@ def jeu_de_la_vie(stateIn):
     return stateOut
 
 def voisins(forme, x, y):
-# retourne nb voisins vivants de forme[y][x]
-# fonction pure
-#TODO: tests & assertions
+# Retourne nb voisins vivants de forme[y][x]
+# Fonction pure et simple, pas besoin de tests unitaires pour ca.
+# Assertions sur les arguments testees par jeu_de_la_vie()
 
     nb_voisins = 0# acc
 
@@ -205,17 +203,21 @@ def voisins(forme, x, y):
     largeur = len(forme[0])
     # ^ forme[0] est suffisant car forme est une matrice rectangulaire
 
-    #TODO: simplifier la logique redondante mais lisible
-    if y > 0:# rangee > 0 donc voisin nord existe
+    # Compacter la logique ou laisser la forme plus lisible?
+
+    if y > 0:               # rangee > 0, donc voisin nord existe
         if forme[y-1][x] != -1:
             nb_voisins += 1
-    if y < (hauteur - 1):# rangee avant la fin, donc voisin sud existe
+
+    if y < (hauteur - 1):   # rangee avant la fin, donc voisin sud existe
         if forme[y+1][x] != -1:
             nb_voisins += 1
-    if x > 0:# colonne > 0 donc voisin ouest existe
+
+    if x > 0:               # colonne > 0, donc voisin ouest existe
         if forme[y][x-1] != -1:
             nb_voisins += 1
-    if x < (largeur - 1):# colonne avant la fin, donc voisin est existe
+
+    if x < (largeur - 1):   # colonne avant la fin, donc voisin est existe
         if forme[y][x+1] != -1:
             nb_voisins += 1
 
